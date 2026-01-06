@@ -1,403 +1,339 @@
-import Link from "next/link";
 import React from "react";
-
-interface Company {
-  name: string;
-}
-
-interface JobMatch {
-  id: string;
-  company: string;
-  position: string;
-  location: string;
-  match: number;
-  logo: string;
-}
-
-interface Feature {
-  icon: string;
-  title: string;
-  description: string;
-  link: string;
-}
-
-interface FooterSection {
-  title: string;
-  links: string[];
-}
+import {
+  Search,
+  Mic,
+  FileText,
+  Briefcase,
+  Users,
+  MessageSquare,
+} from "lucide-react";
 
 const HomePage: React.FC = () => {
-  const companies: Company[] = [
-    { name: "ACME Corp" },
-    { name: "GlobalTech" },
-    { name: "Nebula" },
-    { name: "FoxRun" },
-    { name: "Circle" },
-  ];
-
-  const jobMatches: JobMatch[] = [
-    {
-      id: "1",
-      company: "Google",
-      position: "Senior Product Designer",
-      location: "Remote",
-      match: 92,
-      logo: "G",
-    },
-    {
-      id: "2",
-      company: "Spotify",
-      position: "UX Researcher",
-      location: "New York",
-      match: 88,
-      logo: "S",
-    },
-  ];
-
-  const features: Feature[] = [
-    {
-      icon: "fact_check",
-      title: "Resume Optimization",
-      description:
-        "Beat the ATS with AI-tailored keywords. Upload your resume and get instant feedback on how to improve your score for specific job descriptions.",
-      link: "Learn more",
-    },
-    {
-      icon: "manage_search",
-      title: "Smart Job Search",
-      description:
-        "Stop scrolling aimlessly. Our AI finds roles that match 90%+ of your profile, skills, and preferences, saving you hours of searching.",
-      link: "Learn more",
-    },
-    {
-      icon: "mic",
-      title: "Interview Prep",
-      description:
-        "Practice makes perfect. Engage in realistic voice mock interviews with our AI, receive instant feedback on your tone, pace, and answers.",
-      link: "Learn more",
-    },
-  ];
-
-  const footerSections: FooterSection[] = [
-    {
-      title: "Product",
-      links: ["Resume Builder", "Job Matcher", "Interview Prep", "Pricing"],
-    },
-    {
-      title: "Resources",
-      links: ["Blog", "Career Guide", "Help Center", "Success Stories"],
-    },
-    { title: "Company", links: ["About Us", "Careers", "Legal", "Contact"] },
-  ];
-
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="border-b border-gray-200">
+      <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
-              <span className="material-icons text-blue-600">smart_toy</span>
+              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                <Briefcase className="w-5 h-5 text-white" />
+              </div>
               <span className="text-xl font-bold text-gray-900">
                 Career Copilot
               </span>
             </div>
             <nav className="hidden md:flex space-x-8">
-              <a href="#features" className="text-gray-700 hover:text-blue-600">
+              <a href="#" className="text-gray-600 hover:text-gray-900">
                 Features
               </a>
-              <a href="#pricing" className="text-gray-700 hover:text-blue-600">
+              <a href="#" className="text-gray-600 hover:text-gray-900">
                 Pricing
               </a>
-              <a
-                href="#resources"
-                className="text-gray-700 hover:text-blue-600"
-              >
+              <a href="#" className="text-gray-600 hover:text-gray-900">
                 Resources
               </a>
             </nav>
             <div className="flex items-center space-x-4">
-              <Link href={"/login"}>
-                <button className="text-gray-700 hover:text-blue-600">
-                  Log In
-                </button>
-              </Link>
-              <Link href={"/signup"}>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                  Get Started
-                </button>
-              </Link>
+              <button className="text-gray-600 hover:text-gray-900">
+                Log In
+              </button>
+              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                Get Started
+              </button>
             </div>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-b from-blue-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <span className="material-icons text-blue-600">colors</span>
-                <span className="material-icons text-yellow-500">
-                  auto_awesome
-                </span>
-                <span className="text-sm font-semibold text-gray-600">
-                  AI-Powered Career Growth
-                </span>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <div className="inline-flex items-center space-x-2 bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-sm mb-6">
+              <span>🚀</span>
+              <span>AI-Powered Career Tools</span>
+            </div>
+            <h1 className="text-5xl font-bold text-gray-900 mb-6">
+              Your AI Career Copilot for{" "}
+              <span className="text-blue-600">Resumes, Jobs, & Skills</span>
+            </h1>
+            <p className="text-xl text-gray-600 mb-8">
+              Create a professional resume in minutes with AI-powered tools,
+              search and match jobs, and build career skills — all in one
+              unified platform designed to accelerate your career.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 flex items-center space-x-2">
+                <span>Start Resume Free</span>
+              </button>
+              <button className="bg-white border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-50 flex items-center space-x-2">
+                <span>Try AI Resume Builder</span>
+              </button>
+            </div>
+            <div className="flex items-center space-x-6 mt-8">
+              <div className="flex items-center space-x-2">
+                <div className="flex -space-x-2">
+                  <div className="w-8 h-8 rounded-full bg-blue-500 border-2 border-white"></div>
+                  <div className="w-8 h-8 rounded-full bg-green-500 border-2 border-white"></div>
+                  <div className="w-8 h-8 rounded-full bg-purple-500 border-2 border-white"></div>
+                </div>
+                <span className="text-sm text-gray-600">4.9/5</span>
               </div>
-              <h1 className="text-5xl font-bold text-gray-900 mb-6">
-                Your AI Career Copilot for Resumes, Jobs, & Skills
-              </h1>
-              <p className="text-xl text-gray-600 mb-8">
-                Create your resume, check your ATS score, find matching jobs,
-                and practice skills — all in one unified platform designed to
-                accelerate your career.
-              </p>
-              <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 flex items-center justify-center">
-                  Get Started Free
-                  <span className="material-icons ml-2">arrow_forward</span>
-                </button>
-                <button className="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-50 flex items-center justify-center">
-                  <span className="material-icons mr-2">description</span>
-                  Try Resume Builder
-                </button>
+              <span className="text-sm text-gray-600">
+                Trusted by 2M+ users
+              </span>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-xl p-8">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <div className="flex items-center space-x-2 mb-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span className="text-sm text-gray-600">Resume Score</span>
+                </div>
+                <div className="text-4xl font-bold text-gray-900">87/100</div>
               </div>
-              <p className="text-sm text-gray-500 mt-4">
-                Trusted by 10,000+ job seekers
-              </p>
+              <div className="w-20 h-20 rounded-full border-8 border-green-500 border-t-gray-200 flex items-center justify-center">
+                <span className="text-lg font-bold text-gray-900">87%</span>
+              </div>
             </div>
 
-            {/* Dashboard Preview */}
-            <div className="bg-white rounded-2xl shadow-2xl p-6 border border-gray-200">
-              <div className="text-sm text-gray-500 mb-4">
-                dashboard.career-copilot.ai
-              </div>
-
-              <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl p-6 mb-4 text-white">
-                <div className="text-sm mb-2">ATS Score</div>
-                <div className="text-4xl font-bold mb-2">87/100</div>
-                <div className="flex items-center space-x-2">
-                  <span className="material-icons text-green-300">
-                    trending_up
+            <div className="space-y-4 mb-6">
+              <div className="border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-gray-900">
+                    Senior Product Designer
                   </span>
-                  <span className="text-sm">Top 5% of candidates</span>
-                </div>
-                <div className="mt-4">
-                  <span className="material-icons text-white">
-                    check_circle
+                  <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded">
+                    95% match
                   </span>
                 </div>
+                <p className="text-xs text-gray-600">
+                  Google • San Francisco, CA
+                </p>
               </div>
-
-              <div className="mb-4">
-                <div className="text-sm font-semibold text-gray-700 mb-3">
-                  Recent Matches
+              <div className="border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-gray-900">
+                    UI/UX Designer
+                  </span>
+                  <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded">
+                    92% match
+                  </span>
                 </div>
-                {jobMatches.map((job) => (
-                  <div
-                    key={job.id}
-                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg mb-2"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">
-                        {job.logo}
-                      </div>
-                      <div>
-                        <div className="font-semibold text-gray-900 text-sm">
-                          {job.position}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {job.company} • {job.location}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-sm font-semibold text-blue-600">
-                      {job.match}% Match
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex space-x-2 mb-4">
-                <button className="flex-1 bg-blue-600 text-white py-2 rounded-lg text-sm hover:bg-blue-700">
-                  Optimize Resume
-                </button>
-                <button className="flex-1 border border-gray-300 text-gray-700 py-2 rounded-lg text-sm hover:bg-gray-50">
-                  Practice Interview
-                </button>
-              </div>
-
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="material-icons text-green-600">
-                      rocket_launch
-                    </span>
-                    <div className="text-sm font-semibold text-gray-900 mt-1">
-                      Daily Goal
-                    </div>
-                    <div className="text-xs text-gray-600">
-                      3 Applications Sent!
-                    </div>
-                  </div>
-                </div>
+                <p className="text-xs text-gray-600">Microsoft • Remote</p>
               </div>
             </div>
+
+            <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700">
+              Analyze Resume
+            </button>
+            <p className="text-center text-xs text-gray-500 mt-3">
+              Free • No credit card required
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Trusted By Section */}
-      <section className="py-12 bg-gray-50">
+      {/* Stats Section */}
+      <section className="bg-white border-y border-gray-200 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-sm text-gray-500 mb-8">
-            Trusted by professionals securing roles at
+          <p className="text-center text-gray-600 mb-8">
+            Trusted by jobseekers from leading companies
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-8">
-            {companies.map((company) => (
-              <div
-                key={company.name}
-                className="text-2xl font-bold text-gray-400"
-              >
-                {company.name}
-              </div>
-            ))}
+          <div className="flex flex-wrap justify-center items-center gap-12 text-gray-400">
+            <span className="text-2xl font-bold">Google</span>
+            <span className="text-2xl font-bold">Microsoft</span>
+            <span className="text-2xl font-bold">Amazon</span>
+            <span className="text-2xl font-bold">Apple</span>
+            <span className="text-2xl font-bold">Netflix</span>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Everything you need to succeed
-            </h2>
-            <p className="text-xl text-gray-600">
-              Stop juggling multiple tools. We've combined the best AI career
-              technologies into one simple workflow.
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Everything you need to succeed
+          </h2>
+          <p className="text-xl text-gray-600">
+            Stop juggling between multiple tools. Career Copilot brings your
+            entire job hunt into one simple workflow.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition">
+            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+              <FileText className="w-6 h-6 text-blue-600" />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-3">
+              Resume Optimization
+            </h3>
+            <p className="text-gray-600">
+              Build and optimize ATS-friendly resumes with AI. Our advanced
+              algorithms help increase job match scores and feedback on how to
+              improve your application.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {features.map((feature) => (
-              <div
-                key={feature.title}
-                className="bg-white p-8 rounded-2xl border border-gray-200 hover:shadow-lg transition-shadow"
-              >
-                <span className="material-icons text-blue-600 text-4xl mb-4">
-                  {feature.icon}
-                </span>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 mb-4">{feature.description}</p>
-                <a
-                  href="#"
-                  className="text-blue-600 hover:text-blue-700 flex items-center"
-                >
-                  {feature.link}
-                  <span className="material-icons ml-1">arrow_forward</span>
-                </a>
-              </div>
-            ))}
+          <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition">
+            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-6">
+              <Search className="w-6 h-6 text-purple-600" />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-3">
+              Smart Job Search
+            </h3>
+            <p className="text-gray-600">
+              Stop scrolling through endless job posts that don't match. Our AI
+              finds the best opportunities based on your skills, preferences,
+              and job profile history.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition">
+            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-6">
+              <Mic className="w-6 h-6 text-green-600" />
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-3">
+              Interview Prep
+            </h3>
+            <p className="text-gray-600">
+              Practice with AI-powered mock interviews tailored to your target
+              role. Get instant feedback on your answers, tone, and delivery.
+            </p>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold text-white mb-4">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="bg-blue-600 rounded-3xl p-12 text-center text-white">
+          <h2 className="text-4xl font-bold mb-4">
             Ready to land your dream job?
           </h2>
-          <p className="text-xl text-blue-100 mb-8">
+          <p className="text-xl mb-8 text-blue-100">
             Join thousands of professionals using AI to accelerate their career
             growth today.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <button className="bg-white text-blue-600 px-8 py-3 rounded-lg hover:bg-gray-100 font-semibold">
+          <div className="flex flex-wrap justify-center gap-4">
+            <button className="bg-white text-blue-600 px-8 py-3 rounded-lg hover:bg-gray-100 font-medium">
               Get Started Free
             </button>
-            <button className="border-2 border-white text-white px-8 py-3 rounded-lg hover:bg-white hover:text-blue-600 font-semibold">
+            <button className="bg-blue-700 text-white px-8 py-3 rounded-lg hover:bg-blue-800 font-medium">
               View Demo
             </button>
           </div>
-          <p className="text-sm text-blue-100 mt-6">
-            No credit card required • Cancel anytime
-          </p>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-300 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
+      <footer className="bg-white border-t border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <span className="material-icons text-blue-500">smart_toy</span>
-                <span className="text-xl font-bold text-white">
+                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                  <Briefcase className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-xl font-bold text-gray-900">
                   Career Copilot
                 </span>
               </div>
-              <p className="text-sm">
-                Empowering your career journey with advanced AI tools for
-                resumes, job matching, and interview preparation.
+              <p className="text-gray-600 text-sm mb-4">
+                Your AI-powered career companion for resumes, jobs, and skill
+                development.
               </p>
-              <div className="flex space-x-4 mt-4">
-                <span className="material-icons hover:text-blue-500 cursor-pointer">
-                  public
-                </span>
-                <span className="material-icons hover:text-blue-500 cursor-pointer">
-                  group
-                </span>
-                <span className="material-icons hover:text-blue-500 cursor-pointer">
-                  share
-                </span>
+              <div className="flex space-x-4">
+                <a href="#" className="text-gray-400 hover:text-gray-600">
+                  <Users className="w-5 h-5" />
+                </a>
+                <a href="#" className="text-gray-400 hover:text-gray-600">
+                  <MessageSquare className="w-5 h-5" />
+                </a>
               </div>
             </div>
 
-            {footerSections.map((section) => (
-              <div key={section.title}>
-                <h4 className="text-white font-semibold mb-4">
-                  {section.title}
-                </h4>
-                <ul className="space-y-2">
-                  {section.links.map((link) => (
-                    <li key={link}>
-                      <a href="#" className="text-sm hover:text-blue-500">
-                        {link}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            <div>
+              <h4 className="font-bold text-gray-900 mb-4">Product</h4>
+              <ul className="space-y-2 text-gray-600 text-sm">
+                <li>
+                  <a href="#" className="hover:text-gray-900">
+                    Resume Builder
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-gray-900">
+                    Job Search
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-gray-900">
+                    Interview Prep
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-bold text-gray-900 mb-4">Resources</h4>
+              <ul className="space-y-2 text-gray-600 text-sm">
+                <li>
+                  <a href="#" className="hover:text-gray-900">
+                    Blog
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-gray-900">
+                    Career Tips
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-gray-900">
+                    Help Center
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-bold text-gray-900 mb-4">Company</h4>
+              <ul className="space-y-2 text-gray-600 text-sm">
+                <li>
+                  <a href="#" className="hover:text-gray-900">
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-gray-900">
+                    Careers
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-gray-900">
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
 
-          <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm">
-              © 2024 AI Career Copilot. All rights reserved.
-            </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-sm hover:text-blue-500">
+          <div className="border-t border-gray-200 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-600">
+            <p>© 2025 Career Copilot. All rights reserved.</p>
+            <div className="flex space-x-6 mt-4 sm:mt-0">
+              <a href="#" className="hover:text-gray-900">
                 Privacy Policy
               </a>
-              <a href="#" className="text-sm hover:text-blue-500">
+              <a href="#" className="hover:text-gray-900">
                 Terms of Service
               </a>
             </div>
           </div>
         </div>
       </footer>
-
-      {/* Material Icons CDN */}
-      <link
-        href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        rel="stylesheet"
-      />
     </div>
   );
 };
