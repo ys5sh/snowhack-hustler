@@ -7,6 +7,7 @@ import {
   Users,
   MessageSquare,
 } from "lucide-react";
+import Link from "next/link";
 
 const HomePage: React.FC = () => {
   return (
@@ -24,7 +25,7 @@ const HomePage: React.FC = () => {
               </span>
             </div>
             <nav className="hidden md:flex space-x-8">
-              <a href="#" className="text-gray-600 hover:text-gray-900">
+              {/* <a href="#" className="text-gray-600 hover:text-gray-900">
                 Features
               </a>
               <a href="#" className="text-gray-600 hover:text-gray-900">
@@ -32,15 +33,19 @@ const HomePage: React.FC = () => {
               </a>
               <a href="#" className="text-gray-600 hover:text-gray-900">
                 Resources
-              </a>
+              </a> */}
             </nav>
             <div className="flex items-center space-x-4">
-              <button className="text-gray-600 hover:text-gray-900">
-                Log In
-              </button>
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                Get Started
-              </button>
+              <Link href="/login">
+                <button className="text-gray-600 hover:text-gray-900 cursor-pointer">
+                  Log In
+                </button>
+              </Link>
+              <Link href="/signup">
+                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 cursor-pointer">
+                  Get Started
+                </button>
+              </Link>
             </div>
           </div>
         </div>
