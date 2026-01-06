@@ -22,11 +22,11 @@ export class UsersService {
     }
 
     const existingUser = await this.userModel.findOne({
-      where: { email },
+      email,
     });
 
     if (existingUser) {
-      throw new HttpException('User already exists', 409);
+      throw new HttpException('User with this email already exists', 409);
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
