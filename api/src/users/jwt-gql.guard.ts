@@ -5,6 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
+import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import * as jwt from 'jsonwebtoken';
 
@@ -20,11 +21,14 @@ export interface JwtPayload {
 
 @Injectable()
 export class JwtGqlGuard implements CanActivate {
+  constructor(private readonly jwtService: JwtService) {}
+
   canActivate(context: ExecutionContext): boolean {
     const gqlCtx = GqlExecutionContext.create(context);
-    const req = gqlCtx.getContext<{ req: Request; res: Response }>().req;
+    const req = gqlCtx.getContext<{ req: Request & { user?: JwtPayload } }>()
+      .req;
 
-    const authHeader: string | undefined = req.headers?.authorization;
+    const authHeader = req.headers?.authorization;
 
     if (!authHeader) {
       throw new UnauthorizedException('Authorization header missing');
@@ -34,16 +38,15 @@ export class JwtGqlGuard implements CanActivate {
       throw new UnauthorizedException('Invalid authorization format');
     }
 
-    const token: string = authHeader.split(' ')[1];
+    const token = authHeader.split(' ')[1];
+    console.log('auth header', token);
 
     try {
-      const payload = jwt.verify(
-        token,
-        process.env.JWT_SECRET as string,
-      ) as JwtPayload;
+      const payload = this.jwtService.verify(token) as JwtPayload;
+      console.log('payload verify', payload);
 
       // attach user to request
-      (req as unknown as { user: JwtPayload }).user = payload;
+      req.user = payload; // ✅ no assertion needed
 
       return true;
     } catch {

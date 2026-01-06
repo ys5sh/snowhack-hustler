@@ -230,7 +230,7 @@ const SignupPage: React.FC = () => {
                     <span className="sr-only">Loading...</span>
                   </div>
                 ) : (
-                  "  Create Account"
+                  "Create Account"
                 )}
               </button>
             </div>
