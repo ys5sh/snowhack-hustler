@@ -13,6 +13,11 @@ export class User {
   email: string;
 
   @Field(() => String)
+  @Prop({ required: true })
+  name: string;
+
+  @Field(() => String)
+  @Prop({ required: true })
   password: string;
 }
 

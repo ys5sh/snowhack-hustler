@@ -1,16 +1,19 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { UsersService } from './users.service';
-import { CreateUserInput } from './dto/create-user.input';
-import { UpdateUserInput } from './dto/update-user.input';
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { User } from 'src/schema/user-schema';
+import { CreateUserInput, LoginUserInput } from './dto/create-user.input';
+import { LoginResponse } from './entities/user.entity';
+import { UsersService } from './users.service';
+import { UseGuards } from '@nestjs/common';
+import { JwtGqlGuard } from './jwt-gql.guard';
 
 @Resolver(() => User)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
   @Mutation(() => String)
-  createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
-    return this.usersService.create(createUserInput);
+  signUp(@Args('createUserInput') createUserInput: CreateUserInput) {
+    return this.usersService.signupUser(createUserInput);
   }
 
   @Query(() => [User])
@@ -18,18 +21,18 @@ export class UsersResolver {
     return this.usersService.findAll();
   }
 
-  @Query(() => User, { name: 'user' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.usersService.findOne(id);
+  @Mutation(() => LoginResponse)
+  login(
+    @Args('loginInput') loginInput: LoginUserInput,
+    @Context() context: any,
+  ) {
+    return this.usersService.loginUser(loginInput, context);
   }
 
-  @Mutation(() => User)
-  updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
-    return this.usersService.update(updateUserInput.id, updateUserInput);
-  }
-
-  @Mutation(() => User)
-  removeUser(@Args('id', { type: () => Int }) id: number) {
-    return this.usersService.remove(id);
+  @Query(() => String)
+  @UseGuards(JwtGqlGuard)
+  me(@Context() context: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return context.req.user.email;
   }
 }
