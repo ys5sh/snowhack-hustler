@@ -8,6 +8,7 @@ import { join } from 'node:path';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppResolver } from './app.resolver';
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
+import { Request, Response } from 'express';
 
 @Module({
   imports: [
@@ -23,6 +24,10 @@ import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
           ? [ApolloServerPluginLandingPageLocalDefault()]
           : undefined,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      context: ({ req, res }: { req: Request; res: Response }) => ({
+        req,
+        res,
+      }),
     }),
     MongooseModule.forRootAsync({
       inject: [ConfigService],

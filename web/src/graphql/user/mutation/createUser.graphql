@@ -1,3 +1,0 @@
-mutation CreateUser($createUserInput: CreateUserInput!) {
-  createUser(createUserInput: $createUserInput)
-}

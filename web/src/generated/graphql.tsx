@@ -17,66 +17,78 @@ export type Scalars = {
 
 export type CreateUserInput = {
   email: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
+
+export type LoginResponse = {
+  __typename: 'LoginResponse';
+  accessToken: Scalars['String']['output'];
+  message: Scalars['String']['output'];
+};
+
+export type LoginUserInput = {
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
 };
 
 export type Mutation = {
   __typename: 'Mutation';
-  createUser: Scalars['String']['output'];
-  removeUser: User;
-  updateUser: User;
+  login: LoginResponse;
+  signUp: Scalars['String']['output'];
 };
 
 
-export type MutationCreateUserArgs = {
+export type MutationLoginArgs = {
+  loginInput: LoginUserInput;
+};
+
+
+export type MutationSignUpArgs = {
   createUserInput: CreateUserInput;
-};
-
-
-export type MutationRemoveUserArgs = {
-  id: Scalars['Int']['input'];
-};
-
-
-export type MutationUpdateUserArgs = {
-  updateUserInput: UpdateUserInput;
 };
 
 export type Query = {
   __typename: 'Query';
   findAll: Array<User>;
   getHello: Scalars['String']['output'];
-  user: User;
-};
-
-
-export type QueryUserArgs = {
-  id: Scalars['Int']['input'];
-};
-
-export type UpdateUserInput = {
-  email?: InputMaybe<Scalars['String']['input']>;
-  id: Scalars['Int']['input'];
+  me: Scalars['String']['output'];
 };
 
 export type User = {
   __typename: 'User';
   _id: Scalars['String']['output'];
   email: Scalars['String']['output'];
+  name: Scalars['String']['output'];
   password: Scalars['String']['output'];
 };
+
+export type GetUserProfileQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserProfileQuery = { me: string };
+
+export type LoginMutationVariables = Exact<{
+  loginInput: LoginUserInput;
+}>;
+
+
+export type LoginMutation = { login: { __typename: 'LoginResponse', message: string, accessToken: string } };
+
+export type SignUpMutationVariables = Exact<{
+  createUserInput: CreateUserInput;
+}>;
+
+
+export type SignUpMutation = { signUp: string };
 
 export type FindAllQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type FindAllQuery = { findAll: Array<{ __typename: 'User', email: string, _id: string }> };
 
-export type CreateUserMutationVariables = Exact<{
-  createUserInput: CreateUserInput;
-}>;
 
-
-export type CreateUserMutation = { createUser: string };
-
-
+export const GetUserProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getUserProfile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"}}]}}]} as unknown as DocumentNode<GetUserProfileQuery, GetUserProfileQueryVariables>;
+export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"loginInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"loginInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"loginInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"accessToken"}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
+export const SignUpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SignUp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createUserInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signUp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createUserInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createUserInput"}}}]}]}}]} as unknown as DocumentNode<SignUpMutation, SignUpMutationVariables>;
 export const FindAllDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindAll"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findAll"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"_id"}}]}}]}}]} as unknown as DocumentNode<FindAllQuery, FindAllQueryVariables>;
-export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createUserInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createUserInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createUserInput"}}}]}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;

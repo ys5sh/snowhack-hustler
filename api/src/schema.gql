@@ -5,26 +5,33 @@
 type User {
   _id: String!
   email: String!
+  name: String!
   password: String!
+}
+
+type LoginResponse {
+  message: String!
+  accessToken: String!
 }
 
 type Query {
   getHello: String!
   findAll: [User!]!
-  user(id: Int!): User!
+  me: String!
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): String!
-  updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): User!
+  signUp(createUserInput: CreateUserInput!): String!
+  login(loginInput: LoginUserInput!): LoginResponse!
 }
 
 input CreateUserInput {
   email: String!
+  password: String!
+  name: String!
 }
 
-input UpdateUserInput {
-  email: String
-  id: Int!
+input LoginUserInput {
+  email: String!
+  password: String!
 }
