@@ -14,8 +14,10 @@ export default function SearchPage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.type !== "application/pdf") {
-      alert("Only PDF resumes are allowed");
+    const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/webp"];
+
+    if (!allowedTypes.includes(file.type)) {
+      alert("Only image files (PNG, JPG, JPEG, WEBP) are allowed");
       return;
     }
 
@@ -50,11 +52,6 @@ export default function SearchPage() {
     } finally {
       setLoading(false);
     }
-
-    setTimeout(() => {
-      setLoading(false);
-      alert("Search triggered (connect backend)");
-    }, 1200);
   };
 
   return (
@@ -97,11 +94,11 @@ export default function SearchPage() {
             <label className="flex items-center gap-3 p-4 border-2 border-dashed rounded-xl cursor-pointer hover:bg-gray-50">
               <Upload className="w-5 h-5 text-blue-600" />
               <span className="text-gray-700 text-sm">
-                {resume ? resume.name : "Upload resume (PDF only)"}
+                {resume ? resume.name : "Upload resume image (PNG, JPG, WEBP)"}
               </span>
               <input
                 type="file"
-                accept="application/pdf"
+                accept="image/png,image/jpeg,image/jpg,image/webp"
                 onChange={handleResumeUpload}
                 className="hidden"
               />

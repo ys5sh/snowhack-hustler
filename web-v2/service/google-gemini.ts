@@ -1,20 +1,21 @@
-export const generateSkillsFromResume = async (resume: File) => {
-  try {
-    if (!resume) {
-      throw new Error("Resume file is required");
-    }
+export const extractSkillsFromResumeImage = async (image: File) => {
+  const base64 = Buffer.from(await image.arrayBuffer()).toString("base64");
 
-    // Convert PDF → base64
-    const base64 = await fileToBase64(resume);
-    const apiKey = "AIzaSyB2N4aaN18QrdX65cvXzddTbB0KvsBhFrs";
-    const model = "gemini-1.5-pro"; // Best for document understanding
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-
-    const prompt = `
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=AIzaSyCyXu38aEePBtKSCgN6Ni-ZdlmMuX4i1qg`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [
+              {
+                text: `
 You are an AI resume analyzer.
 
-Extract the candidate's core skills from the resume.
-Return ONLY valid JSON in this format:
+Extract core skills from the resume image.
+Return ONLY valid JSON:
 
 {
   "technicalSkills": [],
@@ -22,23 +23,11 @@ Return ONLY valid JSON in this format:
   "toolsAndTechnologies": [],
   "domainSkills": []
 }
-`;
-
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [
-              {
-                text: prompt,
+`,
               },
               {
                 inlineData: {
-                  mimeType: "application/pdf",
+                  mimeType: image.type, // image/png, image/jpeg
                   data: base64,
                 },
               },
@@ -46,30 +35,16 @@ Return ONLY valid JSON in this format:
           },
         ],
       }),
-    });
-
-    const data = await response.json();
-
-    const textOutput = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-    if (!textOutput) {
-      throw new Error("No response from Gemini");
     }
+  );
 
-    // Parse JSON safely
-    const skills = JSON.parse(textOutput);
+  const data = await response.json();
 
-    return {
-      success: true,
-      skills,
-    };
-  } catch (error) {
-    console.error("Skill extraction failed:", error);
-    return {
-      success: false,
-      error: (error as { message: string }).message,
-    };
-  }
+  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+  if (!text) throw new Error("No response from Gemini");
+
+  return JSON.parse(text);
 };
 
 export const fileToBase64 = async (file: File): Promise<string> => {

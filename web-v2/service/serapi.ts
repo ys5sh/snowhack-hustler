@@ -1,5 +1,5 @@
 import { getJson } from "serpapi";
-import { generateSkillsFromResume } from "./google-gemini";
+import { extractSkillsFromResumeImage } from "./google-gemini";
 
 export const getResult = async (query: string, location: string) => {
   const result = await getJson({
@@ -20,8 +20,9 @@ export async function searchJobs(
 
   // ✅ Resume-based search
   if (resume) {
-    const skills = await generateSkillsFromResume(resume);
+    const skills = await extractSkillsFromResumeImage(resume);
 
+    console.log("Skills", skills);
     finalQuery = `
       ${skills.skills.join(" ")}
       jobs
@@ -30,6 +31,7 @@ export async function searchJobs(
 
   // 🔍 Call SerpAPI function directly
   const results = await getResult(finalQuery, location);
+  console.log("result", results);
 
   return {
     query: finalQuery,
