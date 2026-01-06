@@ -1,6 +1,0 @@
-query FindAll {
-  findAll {
-    email
-    _id
-  }
-}
