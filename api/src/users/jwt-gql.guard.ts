@@ -39,11 +39,9 @@ export class JwtGqlGuard implements CanActivate {
     }
 
     const token = authHeader.split(' ')[1];
-    console.log('auth header', token);
 
     try {
       const payload = this.jwtService.verify(token) as JwtPayload;
-      console.log('payload verify', payload);
 
       // attach user to request
       req.user = payload; // ✅ no assertion needed
