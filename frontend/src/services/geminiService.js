@@ -1,27 +1,27 @@
 // src/services/geminiService.js
 
-const GEMINI_API_KEY = 'AIzaSyAB_dhliD7qqi3fWFuPjyJWTrDGLVocwCk'
-const GEMINI_MODEL = 'gemini-1.5-flash'
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`
+const GEMINI_API_KEY = "AIzaSyCyXu38aEePBtKSCgN6Ni-ZdlmMuX4i1qg";
+const GEMINI_MODEL = "gemini-3-flash-preview";
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 
 // Convert File to base64
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
-    const reader = new FileReader()
+    const reader = new FileReader();
     reader.onload = () => {
-      const base64 = reader.result.split(',')[1] || reader.result
-      resolve(base64)
-    }
-    reader.onerror = reject
-    reader.readAsDataURL(file)
-  })
+      const base64 = reader.result.split(",")[1] || reader.result;
+      resolve(base64);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 }
 
 // Gemini API call
 export async function analyzeMedicineImage(imageFile) {
-  if (!GEMINI_API_KEY) throw new Error('Missing Gemini API key.')
-  if (!(imageFile instanceof File)) throw new Error('Invalid file type.')
-    const prompt = `
+  if (!GEMINI_API_KEY) throw new Error("Missing Gemini API key.");
+  if (!(imageFile instanceof File)) throw new Error("Invalid file type.");
+  const prompt = `
 You are provided an image of a medicine package. Extract all clearly visible information and generate a concise, structured summary. Use a professional tone. For any missing sections (except expiry and manufacturer), provide medically accurate placeholders without guessing visible details.
 
 Format the output exactly as below, keeping each section brief (max 100 words). Do not repeat any information.
@@ -70,9 +70,9 @@ Extract company name and location only if clearly visible.
 ---
 
 Ensure the output is well-structured, concise, and free of repetition. Only fabricate information where explicitly allowed, and never guess expiry or manufacturer details.
-`
+`;
 
-  const base64Image = await fileToBase64(imageFile)
+  const base64Image = await fileToBase64(imageFile);
 
   const requestBody = {
     contents: [
@@ -82,31 +82,31 @@ Ensure the output is well-structured, concise, and free of repetition. Only fabr
           {
             inlineData: {
               mimeType: imageFile.type,
-              data: base64Image
-            }
-          }
-        ]
-      }
-    ]
-  }
+              data: base64Image,
+            },
+          },
+        ],
+      },
+    ],
+  };
 
   const response = await fetch(GEMINI_API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(requestBody)
-  })
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(requestBody),
+  });
 
-  const result = await response.json()
+  const result = await response.json();
   if (result.error) {
-    throw new Error(result.error.message || 'Gemini API error')
+    throw new Error(result.error.message || "Gemini API error");
   }
 
   const text =
     result?.candidates?.[0]?.content?.parts?.[0]?.text ||
-    result?.candidates?.[0]?.content?.text
-  if (!text) throw new Error('No result text from Gemini')
+    result?.candidates?.[0]?.content?.text;
+  if (!text) throw new Error("No result text from Gemini");
   return {
     analysis: text,
-    raw: result
-  }
+    raw: result,
+  };
 }
